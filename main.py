@@ -29,13 +29,13 @@ async def upload_sprite(file: UploadFile = File(...), db=Depends(get_database)):
     result = await db.sprites.insert_one(sprite_doc)
     return {"message": "Sprite uploaded", "id": str(result.inserted_id)}
 @app.post("/upload_audio")
-async def upload_audio(file: UploadFile = File(...)):
+async def upload_audio(file: UploadFile = File(...), db=Depends(get_database)):
     content = await file.read()
     audio_doc = {"filename": file.filename, "content": content}
     result = await db.audio.insert_one(audio_doc)
     return {"message": "Audio file uploaded", "id": str(result.inserted_id)}
 @app.post("/player_score")
-async def add_score(score: PlayerScore):
+async def add_score(score: PlayerScore, db=Depends(get_database)):
     score_doc = score.dict()
     result = await db.scores.insert_one(score_doc)
     return {"message": "Score recorded", "id": str(result.inserted_id)}
