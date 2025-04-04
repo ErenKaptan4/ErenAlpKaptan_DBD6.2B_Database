@@ -27,6 +27,10 @@ async def get_database():
 class PlayerScore(BaseModel):
     player_name: str
     score: int
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 @app.post("/upload_sprite")
 async def upload_sprite(file: UploadFile = File(...), db=Depends(get_database)):
 # In a real application, the file should be saved to a storage service
