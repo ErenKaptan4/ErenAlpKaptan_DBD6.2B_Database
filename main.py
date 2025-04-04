@@ -7,16 +7,10 @@ app = FastAPI()
 client123 = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://admin:LZEOpvrC4xaEGg7v@erenkaptan.upt8dcm.mongodb.net/?retryWrites=true&w=majority&appName=ErenKaptan")
 async def get_database():
     # Create a new client for each request
-    client = motor.motor_asyncio.AsyncIOMotorClient(
-        client123,
-        maxPoolSize=1,
-        minPoolSize=0,
-        serverSelectionTimeoutMS=5000
-    )
     try:
-        yield client.multimedia_db
+        yield client123.multimedia_db
     finally:
-        client.close()
+        client123.close()
 
 class PlayerScore(BaseModel):
     player_name: str
