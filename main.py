@@ -28,9 +28,6 @@ class PlayerScore(BaseModel):
     player_name: str
     score: int
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
 @app.post("/upload_sprite")
 async def upload_sprite(file: UploadFile = File(...), db=Depends(get_database)):
 # In a real application, the file should be saved to a storage service
@@ -49,3 +46,18 @@ async def add_score(score: PlayerScore, db=Depends(get_database)):
     score_doc = score.dict()
     result = await db.scores.insert_one(score_doc)
     return {"message": "Score recorded", "id": str(result.inserted_id)}
+
+@app.get("/sprites")
+async def get_sprites(db=Depends(get_database)):
+    sprites = await db.sprites.find().to_list(100)  # Limit to 100 documents
+    return {"sprites": sprites}
+
+@app.get("/audio")
+async def get_audio(db=Depends(get_database)):
+    audio_files = await db.audio.find().to_list(100)  # Limit to 100 documents
+    return {"audio_files": audio_files}
+
+@app.get("/player_scores")
+async def get_player_scores(db=Depends(get_database)):
+    scores = await db.scores.find().to_list(100)  # Limit to 100 documents
+    return {"player_scores": scores}
