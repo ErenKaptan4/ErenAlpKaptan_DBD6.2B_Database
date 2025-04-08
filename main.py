@@ -1,5 +1,4 @@
 import os
-import logging
 
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.params import Depends
@@ -47,20 +46,3 @@ async def add_score(score: PlayerScore, db=Depends(get_database)):
     score_doc = score.dict()
     result = await db.scores.insert_one(score_doc)
     return {"message": "Score recorded", "id": str(result.inserted_id)}
-
-@app.get("/get_sprites")
-async def get_sprites(db=Depends(get_database)):
-    sprites = await db.sprites.find().to_list(100)  # Limit to 100 documents
-    return {"sprites": sprites}
-
-@app.get("/audio")
-async def get_audio(db=Depends(get_database)):
-    audio_files = await db.audio.find().to_list(100)  # Limit to 100 documents
-    return {"audio_files": audio_files}
-
-@app.get("/get_player_scores")
-async def get_player_scores(db=Depends(get_database)):
-    logging.info("Fetching player scores from the database...")
-    scores = await db.scores.find().to_list(100)  # Limit to 100 documents
-    logging.info(f"Fetched scores: {scores}")
-    return {"player_scores": scores}
