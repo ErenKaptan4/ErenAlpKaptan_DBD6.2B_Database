@@ -22,7 +22,7 @@ async def get_database():
     finally:
         client.close()
 
-
+#testing if vercel works properly
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
