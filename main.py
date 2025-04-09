@@ -28,6 +28,7 @@ class PlayerScore(BaseModel):
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+#hi
 
 # Endpoint to upload a sprite file
 @app.post("/upload_sprite")
