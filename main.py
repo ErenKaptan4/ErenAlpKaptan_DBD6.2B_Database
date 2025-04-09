@@ -64,3 +64,4 @@ async def add_score(score: PlayerScore, db=Depends(get_database)):
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail="An error occurred while processing the request.")
+    #hello
