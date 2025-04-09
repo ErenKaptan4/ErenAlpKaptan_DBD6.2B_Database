@@ -4,6 +4,7 @@ import motor.motor_asyncio
 from dotenv import load_dotenv
 import os
 
+
 # Initialize FastAPI application
 app = FastAPI()
 
@@ -23,6 +24,10 @@ async def get_database():
 class PlayerScore(BaseModel):
     player_name: str = Field(..., min_length=1, max_length=50, regex="^[a-zA-Z0-9_ ]+$")  # Alphanumeric and underscores only
     score: int = Field(..., ge=0)  # Score must be a non-negative integer
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
 # Endpoint to upload a sprite file
 @app.post("/upload_sprite")
